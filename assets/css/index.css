@@ -282,28 +282,30 @@ body{
   width: 100%;
   max-width:600px;
 }
-.key-item,.key-blank,.key-half-blank{
-  float: left;
-  height: 35px;
-  margin: 0.3%;
-}
-.key-item,.key-blank{
-  width: 9.4%;
-}
-.key-half-blank{
-  width: 4.4%;
-}
 .key-item{
   text-align: center;
   border: 1px solid #fff;
-  line-height: 30px;
+  line-height: 27px;
   background-color: #666;
   color: #fff;
   border-radius: 3px;
   font-weight: bold;
+  width:100%;
+  height:100%;
 }
-.key-item:active{
+.key-item:hover{
   background-color: #222;
+}
+.i-w,.i-w-blank,.i-w-half-blank{
+  float: left;
+  height: 35px;
+  padding:1px;
+}
+.i-w,.i-w-blank{
+  width:10%;
+}
+.i-w-half-blank{
+ width:5%; 
 }
 
 
