@@ -23,7 +23,7 @@ function Bullet(letter){
   ctx.fillText(this.letter,this.x,this.y);
   //ctx.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
 };Bullet.prototype.findTarget=function(){
-  for(var i=0;i<enemys.length-1;i++){
+  for(var i=0;i<enemys.length;i++){
     if(enemys[i].check(this.letter)){
       return enemys[i];
     }
