@@ -1,14 +1,13 @@
 
 var canvas,ctx,cw,ch;
 var player,enemys,bullets;
-J.load(function(){
-  if(!J.isMobile()){
-    J.id("keyboard").css("display","none");
-  }else{
-    J.class("key-item").event("onclick","sendBullet(this.txt())");
-  }
-});
+var addEnemyTime=4000;
 J.ready(function(){
+  if(J.isMobile()){
+    Bullet.prototype.speed=6;
+    Enemy.prototype.speed=0.5;
+    addEnemyTime=8000;
+  }
   initCanvas();
   initObjects();
   start();
@@ -16,18 +15,25 @@ J.ready(function(){
 });
 function initCanvas(){
   canvas=J.id("gameCanvas");
-  cw=J.width();
-  ch=J.height();
-  if(J.isMobile()){
-    ch-=J.id("keyboard").hei();
-  }
-  canvas.width=cw;
-  canvas.height=ch;
+  setPos();
   ctx=canvas.getContext("2d");
   ctx.strokeStyle="#000";
   ctx.fillStyle="#fff";
   ctx.textBaseline = 'middle';//设置文本的垂直对齐方式
   ctx.textAlign = 'center';
+}
+function setPos(){
+  cw=J.width();
+  ch=J.height();
+  if(J.isMobile()){
+    J.id("keyboard").css("display","block");
+    J.class("key-item").event("onclick","sendBullet(this.txt())");
+    ch-=J.id("keyboard").hei();
+  }else{
+    J.id("keyboard").css("display","none");
+  }
+  canvas.width=cw;
+  canvas.height=ch;
 }
 function initObjects(){
   player=new Player();
@@ -37,7 +43,7 @@ function initObjects(){
 function geneEnemy(){
   setInterval(function(){
     enemys.append(new Enemy());
-  },2500);
+  },addEnemyTime);
 }
 function start(){
   setInterval(function(){
@@ -66,4 +72,8 @@ window.onkeydown=function(event){
   if(code>=65&&code<=90){
     sendBullet(String.fromCharCode(code+32));
   }
+}
+window.onresize=function(){
+  setPos();
+  player.resetPos();
 }

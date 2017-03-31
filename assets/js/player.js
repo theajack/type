@@ -9,4 +9,9 @@ function Player(){
   this.draw();
 };Player.prototype.draw=function(){
   ctx.fillRect(this.drawx,this.drawy,this.w,this.h);
-};
+};Player.prototype.resetPos=function(){
+  this.x=cw/2;
+  this.y=ch-this.h/2;
+  this.drawx=this.x-this.w/2;
+  this.drawy=this.y-this.h/2;
+}
