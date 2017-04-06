@@ -163,6 +163,11 @@ body{
   text-decoration:underline;
 }
 
+.wc-share-logo{
+  position: absolute;
+  top: -100%; 
+  opacity:0;
+}
 
 
 
