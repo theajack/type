@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-Hans" class="bg-white" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>打字游戏数据统计</title>
+  </head>
+  <style type="text/css">
+    *{
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .record:before, .record:after {
+        display: table;
+        content: " ";
+    }
+    .record:after {
+      clear: both;
+    }
+    html{
+      width:100%;
+      height:100%;
+      max-width:600px;
+      background-color:rgb(87, 186, 251);
+      margin:0 auto
+    }
+    body{
+      overflow-y:scroll;
+      position:relative;
+    }
+    .record{
+      text-align: center;
+      color: #3c85b5;
+      background-color: rgba(255,255,255,.6);
+    }
+    .record.main{
+      background-color: rgba(255,255,255,.9);
+    }
+    .record.plus{
+      background-color: rgba(0,0,0,.2);
+    }
+    .data{
+      width:20%;
+      float:left;
+      padding: 5px 0;
+      border-top:1px solid rgb(87, 186, 251);
+      border-right:1px solid rgb(87, 186, 251);
+    }
+    
+    .data.no-right{
+      border-right:none;
+    }
+    .data.no-top{
+      border-top:none;
+    }
+    #title{
+      font-size:20px;
+      color:#fff;
+      font-weight:bold;
+      text-align:center;
+      padding: 10px 0;
+    }
+    #refresh{
+      width: 100%;
+      color: #3c85b5;
+      background-color: rgba(255,255,255,.5);
+      padding: 8px;
+      text-align: center;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .data.plus{
+      color: #4f4;
+    }
+    #showText{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 17px;
+      color: #64f369;
+      background-color: rgba(0,0,0,.4);
+      padding: 5px;
+      font-weight: bold;
+      border-radius: 5px;
+      letter-spacing: 2px;
+      display:none;
+    }
+  </style>
+  <body>
+    <div id="showTextWrapper">
+      <div id="showText">刷新成功</div>
+    </div>
+    <div id="title">打字游戏数据统计</div>
+    <div id="refresh" onclick="refresh()">刷新</div>
+    <div id="main">
+      <div class="record main">
+        <div class="data date no-top">日期</div>
+        <div class="data no-top">打开</div>
+        <div class="data no-top">游戏</div>
+        <div class="data no-top">字母</div>
+        <div class="data no-top no-right">得分</div>
+      </div>
+      <div class="record plus">
+        <div class="data date plus"></div>
+        <div class="data plus">+0</div>
+        <div class="data plus">+0</div>
+        <div class="data plus">+0</div>
+        <div class="data plus no-right">+0</div>
+      </div>
+      <div id="dataWrapper">
+      </div>
+    </div>
+    <script src="assets/js/jetter.min.js"></script>
+  </body>
+  <script type="text/javascript">
+  J.ready(function(){
+    jsonp("viewData");
+  });
+  var t;
+  function jsonp(data,isRe){
+    J.jsonp({
+      url:"http://15h97945z7.iok.la/type.aspx",
+      //url:"http://localhost:42864/theajack/type.aspx",
+      data:{type:data},
+      success:function(data){
+        bindData(data.value);
+        clearTimeout(t);
+        if(isRe){
+          J.id("showText").txt("刷新成功").fadeIn();;
+        }else{
+          J.id("showText").txt("加载完成").fadeIn();;
+        }
+        t=setTimeout(function(){
+          J.id("showText").fadeOut(null,500);
+        },1500);
+        checkPlusNum(data.value[data.value.length-1]);
+      },
+      time:15000,
+      timeout:function(err){
+        J.showWait("请求超时","error")
+      },
+      message:"请求超时"
+    });
+  }
+  function checkPlusNum(data){
+    var list=J.select(".record.plus").child();
+    list[0].txt(data.date.split("T")[0].substring(2));
+    if(J.cookie("date")!=data.date){
+      list[1].txt("+"+data.open_time);
+      list[2].txt("+"+data.play_time);
+      list[3].txt("+"+data.letter_time);
+      list[4].txt("+"+data.score_time);
+    }else{
+      list[1].txt("+"+getDiff("type_open_time",data.open_time));
+      list[2].txt("+"+getDiff("type_play_time",data.play_time));
+      list[3].txt("+"+getDiff("type_letter_time",data.letter_time));
+      list[4].txt("+"+getDiff("type_score_time",data.score_time));
+    }
+    saveCookies(data);
+  }
+  function getDiff(type,num){
+    var lastNum=J.cookie(type);
+    if(lastNum==""||lastNum==undefined){
+      lastNum=0;
+    }
+    return num-lastNum;
+  }
+  function saveCookies(data){
+    J.cookie("type_open_time",data.open_time,365);
+    J.cookie("type_play_time",data.play_time,365);
+    J.cookie("type_letter_time",data.letter_time,365);
+    J.cookie("type_score_time",data.score_time,365);
+    J.cookie("date",data.date,365);
+  }
+  function bindData(data){
+    var wrapper=J.id("dataWrapper");
+    data.each(function(item){
+      wrapper.prepend(getOne(item));
+    })
+  }
+  function refresh(){
+    J.id("dataWrapper").empty();
+    jsonp("viewData",true);
+  }
+  function getOne(item){
+    return J.new("div.record").html('\
+      <div class="data date">'+item.date.split("T")[0].substring(2)+'</div>\
+      <div class="data">'+item.open_time+'</div>\
+      <div class="data">'+item.play_time+'</div>\
+      <div class="data">'+item.letter_time+'</div>\
+      <div class="data">'+item.score_time+'</div>\
+    ');
+  }
+  </script>
+</html>

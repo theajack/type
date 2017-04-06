@@ -14,49 +14,84 @@
     <link rel="stylesheet" type="text/css" href="assets/css/index.css"/>
   </head>
   <body>
-    <canvas id="gameCanvas"></canvas>
-    <div id="keyboard">
-      <div class="i-w"><div class="key-item">q</div></div>
-      <div class="i-w"><div class="key-item">w</div></div>
-      <div class="i-w"><div class="key-item">e</div></div>
-      <div class="i-w"><div class="key-item">r</div></div>
-      <div class="i-w"><div class="key-item">t</div></div>
-      <div class="i-w"><div class="key-item">y</div></div>
-      <div class="i-w"><div class="key-item">u</div></div>
-      <div class="i-w"><div class="key-item">i</div></div>
-      <div class="i-w"><div class="key-item">o</div></div>
-      <div class="i-w"><div class="key-item">p</div></div>
-      
-      <div class="i-w-half-blank"></div>
-      <div class="i-w"><div class="key-item">a</div></div>
-      <div class="i-w"><div class="key-item">s</div></div>
-      <div class="i-w"><div class="key-item">d</div></div>
-      <div class="i-w"><div class="key-item">f</div></div>
-      <div class="i-w"><div class="key-item">g</div></div>
-      <div class="i-w"><div class="key-item">h</div></div>
-      <div class="i-w"><div class="key-item">j</div></div>
-      <div class="i-w"><div class="key-item">k</div></div>
-      <div class="i-w"><div class="key-item">l</div></div>
-      <div class="i-w-half-blank"></div>
-      
-      <div class="i-w-half-blank"></div>
-      <div class="i-w-blank"></div>
-      
-      <div class="i-w"><div class="key-item">z</div></div>
-      <div class="i-w"><div class="key-item">x</div></div>
-      <div class="i-w"><div class="key-item">c</div></div>
-      <div class="i-w"><div class="key-item">v</div></div>
-      <div class="i-w"><div class="key-item">b</div></div>
-      <div class="i-w"><div class="key-item">n</div></div>
-      <div class="i-w"><div class="key-item">m</div></div>
-      <div class="i-w-blank"></div>
-      <div class="i-w-half-blank"></div>
+    <div id="background"></div>
+    <div id="gameWrapper">
+      <canvas id="gameCanvas"></canvas>
+      <div id="scoreWrapper">
+        <div class="score-item">
+          <span class="score-title">字母数：</span>
+          <span id="letterNum">0</span>
+        </div>
+        <div class="score-item">
+          <span class="score-title">分数：</span>
+          <span id="score">0</span>
+        </div>
+      </div>
+      <div id="protect">
+      3
+      </div>
+      <div id="funcWrapper">
+        <div id="pause" class="func-item">
+          <img src="assets/images/pause.png" alt="" />
+        </div>
+        <div id="restart" class="func-item">
+          <img src="assets/images/restart.png" alt="" />
+        </div>
+        <div id="help" class="func-item">
+          <img src="assets/images/help.png" alt="" />
+        </div>
+      </div>
+      <div id="showInfo">
+        游戏失败
+      </div>
+      <div id="keyboard">
+        <div class="i-w"><div class="key-item">q</div></div>
+        <div class="i-w"><div class="key-item">w</div></div>
+        <div class="i-w"><div class="key-item">e</div></div>
+        <div class="i-w"><div class="key-item">r</div></div>
+        <div class="i-w"><div class="key-item">t</div></div>
+        <div class="i-w"><div class="key-item">y</div></div>
+        <div class="i-w"><div class="key-item">u</div></div>
+        <div class="i-w"><div class="key-item">i</div></div>
+        <div class="i-w"><div class="key-item">o</div></div>
+        <div class="i-w"><div class="key-item">p</div></div>
+        
+        <div class="i-w-half-blank"></div>
+        <div class="i-w"><div class="key-item">a</div></div>
+        <div class="i-w"><div class="key-item">s</div></div>
+        <div class="i-w"><div class="key-item">d</div></div>
+        <div class="i-w"><div class="key-item">f</div></div>
+        <div class="i-w"><div class="key-item">g</div></div>
+        <div class="i-w"><div class="key-item">h</div></div>
+        <div class="i-w"><div class="key-item">j</div></div>
+        <div class="i-w"><div class="key-item">k</div></div>
+        <div class="i-w"><div class="key-item">l</div></div>
+        <div class="i-w-half-blank"></div>
+        
+        <div class="i-w-half-blank"></div>
+        <div class="i-w-blank"></div>
+        
+        <div class="i-w"><div class="key-item">z</div></div>
+        <div class="i-w"><div class="key-item">x</div></div>
+        <div class="i-w"><div class="key-item">c</div></div>
+        <div class="i-w"><div class="key-item">v</div></div>
+        <div class="i-w"><div class="key-item">b</div></div>
+        <div class="i-w"><div class="key-item">n</div></div>
+        <div class="i-w"><div class="key-item">m</div></div>
+        <div class="i-w-blank"></div>
+        <div class="i-w-half-blank"></div>
+      </div>
+      <div id="helpPage">
+        <div class="text">通过拼音打字发射导弹击毁敌机</div>
+        <div class="text">以下为快捷键</div>
+        <div class="text">回车键：开启护盾</div>
+        <div class="text">空格键：暂停/开始</div>
+        <div class="text">数字5：重新开始</div>
+      </div>
     </div>
     <script src="assets/js/jetter.min.js"></script>
+    <script src="assets/js/animation.js"></script>
     <script src="assets/js/cnchar.js"></script>
-    <script src="assets/js/index.js"></script>
-    <script src="assets/js/player.js"></script>
-    <script src="assets/js/enemy.js"></script>
-    <script src="assets/js/bullet.js"></script>
+    <script src="assets/js/game.js"></script>
   </body>
 </html>
