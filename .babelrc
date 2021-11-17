@@ -1,0 +1,17 @@
+{
+    "presets": [[
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry",
+          "targets": {
+            "esmodules": true,
+            "chrome": "58",
+            "ie": "11"
+          }
+        }
+    ]],
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-proposal-object-rest-spread"
+    ]
+}
