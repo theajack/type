@@ -111,11 +111,11 @@ function pause () {
     if (!Game.isStop) {
         if (!Game.isPause) {
             Game.isPause = true;
-            J.id('pause').child(0).attr('src', './images/start.png');
+            J.id('pause').child(0).attr('src', 'https://cdn.jsdelivr.net/gh/theajack/type/docs/images/start.png');
             showInfo('暂停中');
         } else {
             Game.isPause = false;
-            J.id('pause').child(0).attr('src', './images/pause.png');
+            J.id('pause').child(0).attr('src', 'https://cdn.jsdelivr.net/gh/theajack/type/docs/images/pause.png');
             hideInfo();
         }
     }
