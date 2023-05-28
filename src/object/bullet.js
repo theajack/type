@@ -2,7 +2,7 @@ import {getBulletImg, getDieImg} from '../resource';
 import {Game} from '../store';
 import {showInfo} from '../util';
 
-let BulletSpeed = 30;
+let BulletSpeed = 15; // 30
 
 export function setBulletSpeed (speed) {
     BulletSpeed = speed;

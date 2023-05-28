@@ -1,7 +1,7 @@
 /*
  * @Author: tackchen
  * @Date: 2021-11-17 15:14:34
- * @LastEditors: tackchen
+ * @LastEditors: Please set LastEditors
  * @FilePath: \type\src\store.js
  * @Description: Coding something
  */
@@ -25,5 +25,5 @@ export const Game = {
 };
 
 export const Const = {
-    LoopTime: 50,
+    LoopTime: 16,
 };

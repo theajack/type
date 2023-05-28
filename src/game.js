@@ -76,7 +76,7 @@ function initObjects () {
         ctx: Game.ctx,
         host: J.id('background'),
         max: J.id('background').hei() / 2,
-        per: 0.5,
+        per: 0.3,
         singleCall: function (a) {
             a.host.css('bottom', ( - a.index) + 'px');
         }
@@ -90,23 +90,31 @@ function geneEnemy () {
         }
     }, Game.addEnemyTime);
 }
-function start () {
-    setInterval(function () {
-        if (!Game.isStop && !Game.isPause) {
-            Game.ctx.clearRect(0, 0, Size.gameWidth, Size.gameHeight);
-            Game.player.act();
-            Game.enemys.each(function (a) {
-                a.act();
-            });
-            Game.bullets.each(function (a) {
-                a.act();
-            });
-        }
-        Game.bgMoveAni.act();
-        Game.loopIndex ++;
-        addEnemySpeed();
-    }, Const.LoopTime);
+
+const start = window.requestAnimationFrame ? () => {
+    // debugger;
+    gameFrame();
+    requestAnimationFrame(start);
+} : () => {
+    setInterval(gameFrame, Const.LoopTime);
+};
+
+function gameFrame () {
+    if (!Game.isStop && !Game.isPause) {
+        Game.ctx.clearRect(0, 0, Size.gameWidth, Size.gameHeight);
+        Game.player.act();
+        Game.enemys.each(function (a) {
+            a.act();
+        });
+        Game.bullets.each(function (a) {
+            a.act();
+        });
+    }
+    Game.bgMoveAni.act();
+    Game.loopIndex ++;
+    addEnemySpeed();
 }
+
 function pause () {
     if (!Game.isStop) {
         if (!Game.isPause) {
