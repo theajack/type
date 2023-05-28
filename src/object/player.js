@@ -1,7 +1,7 @@
 /*
  * @Author: tackchen
  * @Date: 2021-11-17 14:47:44
- * @LastEditors: tackchen
+ * @LastEditors: Please set LastEditors
  * @FilePath: \type\src\object\player.js
  * @Description: Coding something
  */
@@ -13,6 +13,7 @@ import {Animation} from './animation';
 
 export class Player {
     constructor () {
+        
         this.w = 51;
         this.h = 75;
         this.x = Size.gameWidth / 2;
@@ -26,6 +27,8 @@ export class Player {
         this.target = null;
         this.letterNum = 0;
         this.score = 0;
+        const best = localStorage.getItem('_typeBestScore');
+        this.setBestScore(best ? parseInt(best) : 0);
         this.protect = 3;
         this.isClear = false;
         this.clearPer = 10;
@@ -134,7 +137,15 @@ export class Player {
             this.score = a;
         }
         J.id('score').txt(this.score);
+        if (this.score > this.bestScore) {
+            this.setBestScore(this.score);
+        }
     };
+    setBestScore (score) {
+        this.bestScore = score;
+        J.id('bestScore').txt(score);
+        localStorage.setItem('_typeBestScore', score);
+    }
     setProtect (a) {
         if (a == undefined) {
             if (this.protect > 0) {
